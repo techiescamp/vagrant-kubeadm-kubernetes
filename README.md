@@ -3,13 +3,13 @@
 
 ## Documentation
 
-[Documentation](https://devopscube.com)
+Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
  
 ## Usage/Examples
 
 ```shell
 git clone 
-cd vagrant
+cd vagrant-kubeadm-kubernetes
 vagrant up
 ```
 
