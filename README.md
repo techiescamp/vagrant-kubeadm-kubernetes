@@ -13,4 +13,5 @@ cd vagrant-kubeadm-kubernetes
 vagrant up
 ```
 
+If you want Centos based setup, please refer https://github.com/marthanda93/VAAS
   
