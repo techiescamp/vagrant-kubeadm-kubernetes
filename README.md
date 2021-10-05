@@ -5,7 +5,7 @@
 
 Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
 
-If you are preparing for CKA, CKAD or CKS exam, save $94 using code **DEVOPS25** at https://kube.promo/latest
+If you are preparing for CKA, CKAD or CKS exam, save $57 using code **DCUBEOFFER** at https://kube.promo/latest
 
 ## Prerequisites
 
