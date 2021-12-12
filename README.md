@@ -27,7 +27,7 @@ vagrant up
 ```shell
 cd vagrant-kubeadm-kubernetes
 cd configs
-export KUBECONFIG=$(PWD)/config
+export KUBECONFIG=$(pwd)/config
 ```
 
 or you can copy the config file to .kube directory.
