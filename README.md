@@ -39,6 +39,7 @@ cp config ~/.kube/
 ## Kubernetes Dashboard URL
 
 ```shell
+describe secret  -n kubernetes-dashboard admin-user-token-nk2sf | grep -i token:
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=kubernetes-dashboard
 ```
 
