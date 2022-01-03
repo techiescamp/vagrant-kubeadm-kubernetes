@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
     SHELL
     
     config.vm.define "master" do |master|
-      master.vm.box = "bento/ubuntu-18.04"
+      master.vm.box = "bento/ubuntu-20.04"
       master.vm.hostname = "master-node"
       master.vm.network "private_network", ip: "192.168.56.10"
       master.vm.provider "virtualbox" do |vb|
@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     (1..2).each do |i|
   
     config.vm.define "node0#{i}" do |node|
-      node.vm.box = "bento/ubuntu-18.04"
+      node.vm.box = "bento/ubuntu-20.04"
       node.vm.hostname = "worker-node0#{i}"
       node.vm.network "private_network", ip: "192.168.56.1#{i}"
       node.vm.provider "virtualbox" do |vb|
