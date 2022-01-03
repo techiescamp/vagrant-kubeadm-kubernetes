@@ -2,7 +2,7 @@
 
 # Variable Declaration
 
-KUBERNETES_VERSION="1.20.6-00"
+#KUBERNETES_VERSION="1.20.6-00"
 
 # disable swap 
 sudo swapoff -a
@@ -54,7 +54,8 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 
 sudo apt-get update -y
 
-sudo apt-get install -y kubelet=$KUBERNETES_VERSION kubectl=$KUBERNETES_VERSION kubeadm=$KUBERNETES_VERSION
+#sudo apt-get install -y kubelet=$KUBERNETES_VERSION kubectl=$KUBERNETES_VERSION kubeadm=$KUBERNETES_VERSION
+sudo apt-get install -y kubelet kubeadm kubectl
 
 sudo apt-mark hold kubelet kubeadm kubectl
 

@@ -27,13 +27,15 @@ vagrant up
 ```shell
 cd vagrant-kubeadm-kubernetes
 cd configs
-export KUBECONFIG=$(pwd)/config
+#export KUBECONFIG=$(pwd)/config
+
 ```
 
 or you can copy the config file to .kube directory.
 
 ```shell
 cp config ~/.kube/
+export KUBECONFIG=$HOME/.kube/config
 ```
 
 ## Kubernetes Dashboard URL
