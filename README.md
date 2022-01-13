@@ -66,6 +66,9 @@ vagrant halt
 ```shell
 vagrant up
 ```
+**Troubleshooting** After vagrant halt... next time during vagrant up... any errors occured..perform following steps in all master and both the nodes
+1) login to vagrant ssh master 2) sudo swapoff -a && sudo systemctl enable kubelet && sudo systemctl restart kubelet
+
 
 ## To destroy the cluster, 
 
