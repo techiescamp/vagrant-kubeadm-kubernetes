@@ -12,7 +12,6 @@ Vagrant.configure("2") do |config|
     config.vm.box_check_update = true
 
     config.vm.define "master" do |master|
-      #master.vm.box = "bento/ubuntu-21.10"
       master.vm.hostname = "master-node"
       master.vm.network "private_network", ip: "192.168.56.10"
       master.vm.provider "virtualbox" do |vb|
@@ -26,7 +25,6 @@ Vagrant.configure("2") do |config|
 
     (1..NUM_WORKER_NODES).each do |i|
       config.vm.define "node0#{i}" do |node|
-        #node.vm.box = "bento/ubuntu-21.10"
         node.vm.hostname = "worker-node0#{i}"
         node.vm.network "private_network", ip: "192.168.56.1#{i}"
         node.vm.provider "virtualbox" do |vb|
