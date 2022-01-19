@@ -17,6 +17,8 @@ sudo kubeadm init --apiserver-advertise-address=$MASTER_IP  --apiserver-cert-ext
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+
 
 # Save Configs to shared /Vagrant locatio
 # For Vagrant re-runs, check if there is existing configs in the location and delete it for saving new configuration.

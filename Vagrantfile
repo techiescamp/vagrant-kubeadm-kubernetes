@@ -1,10 +1,12 @@
-NUM_WORKER_NODES = 2
+NUM_WORKER_NODES=1
+IP_NW="192.168.56."
+IP_START=10
 
 Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
-        echo "192.168.56.10  master-node" >> /etc/hosts
-        echo "192.168.56.11  worker-node01" >> /etc/hosts
-        echo "192.168.56.12  worker-node02" >> /etc/hosts
+        echo "$IP_NW$((IP_START))  master-node" >> /etc/hosts
+        echo "$IP_NW$((IP_START+1))  worker-node01" >> /etc/hosts
+        #echo "$IP_NW$((IP_START+2))  worker-node02" >> /etc/hosts
         echo "nameserver 8.8.8.8" >> /etc/resolv.conf
         echo "nameserver 8.8.4.4" >> /etc/resolv.conf
     SHELL
@@ -13,7 +15,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "master" do |master|
       master.vm.hostname = "master-node"
-      master.vm.network "private_network", ip: "192.168.56.10"
+      master.vm.network "private_network", ip: IP_NW + "#{IP_START}"
       master.vm.provider "virtualbox" do |vb|
           vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
           vb.memory = 4096
@@ -26,7 +28,7 @@ Vagrant.configure("2") do |config|
     (1..NUM_WORKER_NODES).each do |i|
       config.vm.define "node0#{i}" do |node|
         node.vm.hostname = "worker-node0#{i}"
-        node.vm.network "private_network", ip: "192.168.56.1#{i}"
+        node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}"
         node.vm.provider "virtualbox" do |vb|
             vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
             vb.memory = 2048
