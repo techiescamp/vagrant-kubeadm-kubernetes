@@ -7,6 +7,8 @@ Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vag
 
 If you are preparing for CKA, CKAD, CKS or KCNA exam, save $57 using code **SCOFFER15** at https://kube.promo/latest
 
+Current k8s version for CKA, CKAD and CKS exam: 1.22
+
 ## Prerequisites
 
 1. Working Vagrant setup
