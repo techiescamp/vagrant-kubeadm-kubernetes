@@ -2,11 +2,6 @@
 
 # Variable Declaration
 
-<<<<<<< Updated upstream
-# KUBERNETES_VERSION="1.20.6-00"
-
-=======
->>>>>>> Stashed changes
 KUBERNETES_VERSION="1.22.6-00"
 
 # disable swap 
