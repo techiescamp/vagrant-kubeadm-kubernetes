@@ -76,6 +76,8 @@ sudo cp -i /vagrant/configs/config /home/vagrant/.kube/
 sudo chown 1000:1000 /home/vagrant/.kube/config
 EOF
 
+sudo systemctl restart systemd-resolved
+sudo swapoff -a && sudo systemctl daemon-reload && sudo systemctl restart kubelet
 
 
 
