@@ -7,7 +7,7 @@ Current k8s version for CKA, CKAD and CKS exam: 1.22.
 
 Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
 
-## CKA, CKAD, CKS or KCNA Voucher Codes
+## 🚀 CKA, CKAD, CKS or KCNA Voucher Codes
 
 If you are preparing for CKA, CKAD, CKS or KCNA exam, save $57 using code **DCUBEOFFER** at https://kube.promo/latest
 
