@@ -16,9 +16,7 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Save Configs to shared /Vagrant location
-
 # For Vagrant re-runs, check if there is existing configs in the location and delete it for saving new configuration.
-
 config_path="/vagrant/configs"
 
 if [ -d $config_path ]; then
@@ -31,25 +29,22 @@ cp -i /etc/kubernetes/admin.conf /vagrant/configs/config
 touch /vagrant/configs/join.sh
 chmod +x /vagrant/configs/join.sh       
 
-
+# Generete kubeadm join command
 kubeadm token create --print-join-command > /vagrant/configs/join.sh
 
 # Install Calico Network Plugin
-
 curl https://docs.projectcalico.org/manifests/calico.yaml -O
 
 kubectl apply -f calico.yaml
 
 # Install Metrics Server
-
-kubectl apply -f https://raw.githubusercontent.com/scriptcamp/kubeadm-scripts/main/manifests/metrics-server.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl patch deployment metrics-server -n kube-system --type 'json' -p '[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'
 
 # Install Kubernetes Dashboard
-
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
 
 # Create Dashboard User
-
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ServiceAccount
@@ -81,6 +76,8 @@ sudo cp -i /vagrant/configs/config /home/vagrant/.kube/
 sudo chown 1000:1000 /home/vagrant/.kube/config
 EOF
 
+sudo systemctl restart systemd-resolved
+sudo swapoff -a && sudo systemctl daemon-reload && sudo systemctl restart kubelet
 
 
 
