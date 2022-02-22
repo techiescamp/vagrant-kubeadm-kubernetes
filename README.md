@@ -9,7 +9,7 @@ Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vag
 
 ## 🚀 CKA, CKAD, CKS or KCNA Voucher Codes
 
-If you are preparing for CKA, CKAD, CKS or KCNA exam, **save $57** using code **DCUBEOFFER** at https://kube.promo/latest
+If you are preparing for CKA, CKAD, CKS or KCNA exam, **save 22% ($83)** today using code **TWOS22** at https://kube.promo/latest. It is a limited time offer
 
 ## Prerequisites
 
