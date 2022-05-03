@@ -1,5 +1,5 @@
 
-# Vagrantfile and Scripts to Automate Kubernetes Setup using Kubeadm [Practice Environemnt for CKA/CKAD and CKS Exams]
+# Vagrantfile and Scripts to Automate Kubernetes Setup using Kubeadm [Practice Environment for CKA/CKAD and CKS Exams]
 
 ## Documentation
 
@@ -16,7 +16,7 @@ If you are preparing for CKA, CKAD, CKS or KCNA exam, **get $57 discount** today
 1. Working Vagrant setup
 2. 8 Gig + RAM workstation as the Vms use 3 vCPUS and 4+ GB RAM
 
-## For MAC Users
+## For MAC/Linux Users
 
 Latest version of Virtualbox for Mac/Linux can cause issues because you have to create/edit the /etc/vbox/networks.conf file and add:
 <pre>* 0.0.0.0/0 ::/0</pre>
@@ -30,7 +30,7 @@ echo "* 0.0.0.0/0 ::/0" | sudo tee -a /etc/vbox/networks.conf
 
 So that the host only networks can be in any range, not just 192.168.56.0/21 as described here:
 https://discuss.hashicorp.com/t/vagrant-2-2-18-osx-11-6-cannot-create-private-network/30984/23
- 
+
 ## Usage/Examples
 
 To provision the cluster, execute the following commands.
@@ -41,7 +41,7 @@ cd vagrant-kubeadm-kubernetes
 vagrant up
 ```
 
-## Set Kubeconfig file varaible.
+## Set Kubeconfig file variable
 
 ```shell
 cd vagrant-kubeadm-kubernetes
@@ -71,7 +71,7 @@ cd configs
 cat token
 ```
 
-## To shutdown the cluster, 
+## To shutdown the cluster,
 
 ```shell
 vagrant halt
@@ -83,7 +83,7 @@ vagrant halt
 vagrant up
 ```
 
-## To destroy the cluster, 
+## To destroy the cluster,
 
 ```shell
 vagrant destroy -f
