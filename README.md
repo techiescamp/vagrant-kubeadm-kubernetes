@@ -22,9 +22,10 @@ Latest version of Virtualbox for Mac/Linux can cause issues because you have to 
 <pre>* 0.0.0.0/0 ::/0</pre>
 
 or run below commands
-```sh
+
+```shell
 sudo mkdir -p /etc/vbox/
-echo * 0.0.0.0/0 ::/0 | sudo tee -a /etc/vbox/networks.conf
+echo "* 0.0.0.0/0 ::/0" | sudo tee -a /etc/vbox/networks.conf
 ```
 
 So that the host only networks can be in any range, not just 192.168.56.0/21 as described here:
@@ -91,4 +92,3 @@ vagrant destroy -f
 ## Centos & HA based Setup
 
 If you want Centos based setup, please refer https://github.com/marthanda93/VAAS
-  
