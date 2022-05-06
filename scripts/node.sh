@@ -1,4 +1,8 @@
-#! /bin/bash
+#!/bin/bash
+#
+# Setup for Node servers
+
+set -euxo pipefail
 
 /bin/bash /vagrant/configs/join.sh -v
 

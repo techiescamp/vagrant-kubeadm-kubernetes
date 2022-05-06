@@ -1,18 +1,19 @@
-#! /bin/bash
+#!/bin/bash
+#
+# Common setup for all servers (Control Plane and Nodes)
+
+set -euxo pipefail
 
 # Variable Declaration
 
-KUBERNETES_VERSION="1.23.0-00 "
+KUBERNETES_VERSION="1.23.6-00"
 
-# disable swap 
+# disable swap
 sudo swapoff -a
 
 # keeps the swaf off during reboot
-(crontab -l 2>/dev/null; echo "@reboot /sbin/swapoff -a") | crontab -
-
-
+(crontab -l 2>/dev/null; echo "@reboot /sbin/swapoff -a") | crontab - || true
 sudo apt-get update -y
-
 # Install CRI-O Runtime
 
 OS="xUbuntu_20.04"
@@ -55,16 +56,13 @@ sudo systemctl enable crio --now
 
 echo "CRI runtime installed susccessfully"
 
-
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-
 sudo apt-get update -y
-sudo apt-get install -y kubelet=$KUBERNETES_VERSION kubectl=$KUBERNETES_VERSION kubeadm=$KUBERNETES_VERSION
-
+sudo apt-get install -y kubelet="$KUBERNETES_VERSION" kubectl="$KUBERNETES_VERSION" kubeadm="$KUBERNETES_VERSION"
 sudo apt-get update -y
 sudo apt-get install -y jq
 
