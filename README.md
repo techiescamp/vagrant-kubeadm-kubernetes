@@ -3,7 +3,7 @@
 
 ## Documentation
 
-Current k8s version for CKA, CKAD and CKS exam: 1.23
+Current k8s version for CKA, CKAD and CKS exam: 1.24
 
 Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
 
