@@ -30,11 +30,11 @@ else
   mkdir -p $config_path
 fi
 
-cp -i /etc/kubernetes/admin.conf /vagrant/configs/config
-touch /vagrant/configs/join.sh
-chmod +x /vagrant/configs/join.sh
+cp -i /etc/kubernetes/admin.conf $config_path/config
+touch $config_path/join.sh
+chmod +x $config_path/join.sh
 
-kubeadm token create --print-join-command > /vagrant/configs/join.sh
+kubeadm token create --print-join-command > $config_path/join.sh
 
 # Install Calico Network Plugin
 
@@ -75,11 +75,11 @@ subjects:
   namespace: kubernetes-dashboard
 EOF
 
-kubectl -n kubernetes-dashboard get secret "$(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}")" -o go-template="{{.data.token | base64decode}}" >> /vagrant/configs/token
+kubectl -n kubernetes-dashboard get secret "$(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}")" -o go-template="{{.data.token | base64decode}}" >> $config_path/token
 
 sudo -i -u vagrant bash << EOF
 whoami
 mkdir -p /home/vagrant/.kube
-sudo cp -i /vagrant/configs/config /home/vagrant/.kube/
+sudo cp -i $config_path/config /home/vagrant/.kube/
 sudo chown 1000:1000 /home/vagrant/.kube/config
 EOF
