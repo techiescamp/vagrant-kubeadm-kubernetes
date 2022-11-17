@@ -7,6 +7,7 @@ set -euxo pipefail
 # Variable Declaration
 
 KUBERNETES_VERSION="1.23.6-00"
+HELM_VERSION="v3.10.2"
 
 # disable swap
 sudo swapoff -a
@@ -65,6 +66,12 @@ sudo apt-get update -y
 sudo apt-get install -y kubelet="$KUBERNETES_VERSION" kubectl="$KUBERNETES_VERSION" kubeadm="$KUBERNETES_VERSION"
 sudo apt-get update -y
 sudo apt-get install -y jq
+
+# Install helm
+echo "Installing helm"
+curl -LO https://get.helm.sh/helm-$HELM_VERSION-linux-amd64.tar.gz
+tar -xvzf helm-$HELM_VERSION-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
 
 local_ip="$(ip --json a s | jq -r '.[] | if .ifname == "eth1" then .addr_info[] | if .family == "inet" then .local else empty end else empty end')"
 cat > /etc/default/kubelet << EOF
