@@ -8,6 +8,15 @@ set -euxo pipefail
 
 KUBERNETES_VERSION="1.25.5-00"
 
+# DNS Setting
+sudo mkdir /etc/systemd/resolved.conf.d/
+cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
+[Resolve]
+DNS=8.8.8.8 1.1.1.1
+EOF
+
+sudo systemctl restart systemd-resolved
+
 # disable swap
 sudo swapoff -a
 
