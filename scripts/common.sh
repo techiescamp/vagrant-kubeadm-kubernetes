@@ -6,7 +6,16 @@ set -euxo pipefail
 
 # Variable Declaration
 
-KUBERNETES_VERSION="1.23.6-00"
+KUBERNETES_VERSION="1.25.5-00"
+
+# DNS Setting
+sudo mkdir /etc/systemd/resolved.conf.d/
+cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
+[Resolve]
+DNS=8.8.8.8 1.1.1.1
+EOF
+
+sudo systemctl restart systemd-resolved
 
 # disable swap
 sudo swapoff -a
@@ -18,7 +27,7 @@ sudo apt-get update -y
 
 OS="xUbuntu_20.04"
 
-VERSION="1.23"
+VERSION="1.25"
 
 # Create the .conf file to load the modules at bootup
 cat <<EOF | sudo tee /etc/modules-load.d/crio.conf
