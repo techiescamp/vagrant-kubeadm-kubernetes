@@ -86,7 +86,7 @@ subjects:
   namespace: kubernetes-dashboard
 EOF
 
-kubectl -n kubernetes-dashboard get secret "$(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}")" -o go-template="{{.data.token | base64decode}}" >> $config_path/token
+kubectl -n kubernetes-dashboard get secret "$(kubectl -n kubernetes-dashboard get admin-user default -o jsonpath="{.secrets[0].name}")" -o go-template="{{.data.token | base64decode}}" >> $config_path/token
 
 sudo -i -u vagrant bash << EOF
 whoami
