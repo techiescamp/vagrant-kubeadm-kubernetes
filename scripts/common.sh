@@ -6,13 +6,11 @@ set -euxo pipefail
 
 # Variable Declaration
 
-KUBERNETES_VERSION="1.26.1-00"
-
 # DNS Setting
 sudo mkdir /etc/systemd/resolved.conf.d/
 cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
 [Resolve]
-DNS=8.8.8.8 1.1.1.1
+DNS=${DNS_SERVERS}
 EOF
 
 sudo systemctl restart systemd-resolved
@@ -20,14 +18,12 @@ sudo systemctl restart systemd-resolved
 # disable swap
 sudo swapoff -a
 
-# keeps the swaf off during reboot
+# keeps the swap off during reboot
 (crontab -l 2>/dev/null; echo "@reboot /sbin/swapoff -a") | crontab - || true
 sudo apt-get update -y
 # Install CRI-O Runtime
 
-OS="xUbuntu_20.04"
-
-VERSION="1.25"
+VERSION="$(echo ${KUBERNETES_VERSION} | grep -oE '[0-9]+\.[0-9]+')"
 
 # Create the .conf file to load the modules at bootup
 cat <<EOF | sudo tee /etc/modules-load.d/crio.conf
