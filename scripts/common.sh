@@ -6,7 +6,7 @@ set -euxo pipefail
 
 # Variable Declaration
 
-KUBERNETES_VERSION="1.25.5-00"
+KUBERNETES_VERSION="1.26.1-00"
 
 # DNS Setting
 sudo mkdir /etc/systemd/resolved.conf.d/

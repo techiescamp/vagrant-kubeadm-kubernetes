@@ -1,4 +1,4 @@
-NUM_WORKER_NODES=2
+NUM_WORKER_NODES=1
 IP_NW="10.0.0."
 IP_START=10
 
@@ -14,7 +14,6 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = true
 
   config.vm.define "master" do |master|
-    # master.vm.box = "bento/ubuntu-18.04"
     master.vm.hostname = "master-node"
     master.vm.network "private_network", ip: IP_NW + "#{IP_START}"
     master.vm.provider "virtualbox" do |vb|

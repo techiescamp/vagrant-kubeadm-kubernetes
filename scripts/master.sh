@@ -6,13 +6,14 @@ set -euxo pipefail
 
 MASTER_IP="10.0.0.10"
 NODENAME=$(hostname -s)
-POD_CIDR="192.168.0.0/16"
+POD_CIDR="172.16.1.0/16"
+SERVICE_CIDR="172.17.1.0/18"
 
 sudo kubeadm config images pull
 
 echo "Preflight Check Passed: Downloaded All Required Images"
 
-sudo kubeadm init --apiserver-advertise-address=$MASTER_IP --apiserver-cert-extra-sans=$MASTER_IP --pod-network-cidr=$POD_CIDR --node-name "$NODENAME" --ignore-preflight-errors Swap
+sudo kubeadm init --apiserver-advertise-address=$MASTER_IP --apiserver-cert-extra-sans=$MASTER_IP --pod-network-cidr=$POD_CIDR --service-cidr=$SERVICE_CIDR --node-name "$NODENAME" --ignore-preflight-errors Swap
 
 mkdir -p "$HOME"/.kube
 sudo cp -i /etc/kubernetes/admin.conf "$HOME"/.kube/config
@@ -38,55 +39,9 @@ kubeadm token create --print-join-command > $config_path/join.sh
 
 # Install Calico Network Plugin
 
-curl https://docs.projectcalico.org/manifests/calico.yaml -O
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
 
 kubectl apply -f calico.yaml
-
-# Install Metrics Server
-
-kubectl apply -f https://raw.githubusercontent.com/scriptcamp/kubeadm-scripts/main/manifests/metrics-server.yaml
-
-# Install Kubernetes Dashboard
-
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.1/aio/deploy/recommended.yaml
-
-# Create Dashboard User
-
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
-EOF
-
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: Secret
-type: kubernetes.io/service-account-token
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
-  annotations:
-    kubernetes.io/service-account.name: admin-user
-EOF
-
-cat <<EOF | kubectl apply -f -
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: admin-user
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: admin-user
-  namespace: kubernetes-dashboard
-EOF
-
-kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}" >> $config_path/token
 
 sudo -i -u vagrant bash << EOF
 whoami
@@ -94,3 +49,8 @@ mkdir -p /home/vagrant/.kube
 sudo cp -i $config_path/config /home/vagrant/.kube/
 sudo chown 1000:1000 /home/vagrant/.kube/config
 EOF
+
+# Install Metrics Server
+
+kubectl apply -f https://raw.githubusercontent.com/techiescamp/kubeadm-scripts/main/manifests/metrics-server.yaml
+
