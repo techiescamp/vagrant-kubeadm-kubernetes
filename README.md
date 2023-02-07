@@ -42,6 +42,19 @@ git clone https://github.com/scriptcamp/vagrant-kubeadm-kubernetes.git
 cd vagrant-kubeadm-kubernetes
 vagrant up
 ```
+## Set Kubeconfig file variable
+
+```shell
+cd vagrant-kubeadm-kubernetes
+cd configs
+export KUBECONFIG=$(pwd)/config
+```
+
+or you can copy the config file to .kube directory.
+
+```shell
+cp config ~/.kube/
+```
 
 ## Install Kubernetes Dashboard
 
@@ -99,36 +112,11 @@ use the following command to get the loging token
 kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}" 
 ```
 
-## Set Kubeconfig file variable
-
-```shell
-cd vagrant-kubeadm-kubernetes
-cd configs
-export KUBECONFIG=$(pwd)/config
-```
-
-or you can copy the config file to .kube directory.
-
-```shell
-cp config ~/.kube/
-```
-
 ## Kubernetes Dashboard URL
 
 ```shell
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=kubernetes-dashboard
 ```
-
-## Kubernetes login token
-
-Vagrant up will create the admin user token and saves in the configs directory.
-
-```shell
-cd vagrant-kubeadm-kubernetes
-cd configs
-cat token
-```
-
 ## To shutdown the cluster,
 
 ```shell
