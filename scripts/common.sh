@@ -56,6 +56,9 @@ curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/
 sudo apt-get update
 sudo apt-get install cri-o cri-o-runc -y
 
+cat >> /etc/default/crio << EOF
+${ENVIRONMENT}
+EOF
 sudo systemctl daemon-reload
 sudo systemctl enable crio --now
 
@@ -74,4 +77,5 @@ sudo apt-get install -y jq
 local_ip="$(ip --json a s | jq -r '.[] | if .ifname == "eth1" then .addr_info[] | if .family == "inet" then .local else empty end else empty end')"
 cat > /etc/default/kubelet << EOF
 KUBELET_EXTRA_ARGS=--node-ip=$local_ip
+${ENVIRONMENT}
 EOF
