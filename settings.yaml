@@ -18,6 +18,11 @@ nodes:
     count: 1
     cpu: 1
     memory: 2048
+# Mount additional shared folders from the host into each virtual machine.
+# Note that the project directory is automatically mounted at /vagrant.
+# shared_folders:
+#   - host_path: ../images
+#     vm_path: /vagrant/images
 software:
   box: bento/ubuntu-22.04
   kubernetes: 1.26.1-00
