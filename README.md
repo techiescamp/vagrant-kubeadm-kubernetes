@@ -58,65 +58,30 @@ cp config ~/.kube/
 
 ## Install Kubernetes Dashboard
 
-Execute the following YAMLs to create the dashboard user.
+The dashboard is automatically installed by default, but it can be skipped by commenting out the dashboard version in _settings.yaml_ before running `vagrant up`.
 
-```
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
-EOF
+If you skip the dashboard installation, you can deploy it later by enabling it in _settings.yaml_ and running the following:
+```shell
+vagrant ssh -c "/vagrant/scripts/dashboard.sh" master
 ```
 
-```
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: Secret
-type: kubernetes.io/service-account-token
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
-  annotations:
-    kubernetes.io/service-account.name: admin-user
-EOF
+## Kubernetes Dashboard Access
+
+To get the login token, copy it from _config/token_ or run the following command:
+```shell
+kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}"
 ```
 
-```
-cat <<EOF | kubectl apply -f -
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: admin-user
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: admin-user
-  namespace: kubernetes-dashboard
-EOF
+Proxy the dashboard:
+```shell
+kubectl proxy
 ```
 
-Deploy the dashboard
-
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-```
-
-use the following command to get the loging token
-
-```
-kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}" 
-```
-
-## Kubernetes Dashboard URL
-
+Open the site in your browser:
 ```shell
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=kubernetes-dashboard
 ```
+
 ## To shutdown the cluster,
 
 ```shell
