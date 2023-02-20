@@ -20,5 +20,7 @@ nodes:
     memory: 2048
 software:
   box: bento/ubuntu-22.04
+  # To skip the dashboard installation, set its version to an empty value or comment it out:
+  dashboard: 2.7.0
   kubernetes: 1.26.1-00
   os: xUbuntu_22.04
