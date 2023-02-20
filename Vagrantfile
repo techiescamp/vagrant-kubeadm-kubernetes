@@ -34,6 +34,7 @@ Vagrant.configure("2") do |config|
     master.vm.provision "shell",
       env: {
         "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+        "ENVIRONMENT" => settings["environment"],
         "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
         "OS" => settings["software"]["os"]
       },
@@ -62,6 +63,7 @@ Vagrant.configure("2") do |config|
       node.vm.provision "shell",
         env: {
           "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+          "ENVIRONMENT" => settings["environment"],
           "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
           "OS" => settings["software"]["os"]
         },
