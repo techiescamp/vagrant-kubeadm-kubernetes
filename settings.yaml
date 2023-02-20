@@ -24,6 +24,11 @@ nodes:
     count: 1
     cpu: 1
     memory: 2048
+# Mount additional shared folders from the host into each virtual machine.
+# Note that the project directory is automatically mounted at /vagrant.
+# shared_folders:
+#   - host_path: ../images
+#     vm_path: /vagrant/images
 software:
   box: bento/ubuntu-22.04
   # To skip the dashboard installation, set its version to an empty value or comment it out:
