@@ -7,7 +7,9 @@ set -euxo pipefail
 # Variable Declaration
 
 # DNS Setting
-sudo mkdir /etc/systemd/resolved.conf.d/
+if [ ! -d /etc/systemd/resolved.conf.d ]; then
+	sudo mkdir /etc/systemd/resolved.conf.d/
+fi
 cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
 [Resolve]
 DNS=${DNS_SERVERS}
