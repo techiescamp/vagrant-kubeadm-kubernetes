@@ -6,11 +6,20 @@ set -euxo pipefail
 
 NODENAME=$(hostname -s)
 
-sudo kubeadm config images pull
+if [ -n "$IMAGE_REPOSITORY" ]; then
+IMAGE_REPOSITORY_FLAG="--image-repository $IMAGE_REPOSITORY"
+fi
+
+sudo kubeadm config images list $IMAGE_REPOSITORY_FLAG
+sudo kubeadm config images pull $IMAGE_REPOSITORY_FLAG
 
 echo "Preflight Check Passed: Downloaded All Required Images"
 
-sudo kubeadm init --apiserver-advertise-address=$CONTROL_IP --apiserver-cert-extra-sans=$CONTROL_IP --pod-network-cidr=$POD_CIDR --service-cidr=$SERVICE_CIDR --node-name "$NODENAME" --ignore-preflight-errors Swap
+sudo kubeadm reset -f
+sudo kubeadm init --apiserver-advertise-address=$CONTROL_IP \
+  --apiserver-cert-extra-sans=$CONTROL_IP --pod-network-cidr=$POD_CIDR \
+  --service-cidr=$SERVICE_CIDR --node-name "$NODENAME" \
+  --ignore-preflight-errors Swap $IMAGE_REPOSITORY_FLAG
 
 mkdir -p "$HOME"/.kube
 sudo cp -i /etc/kubernetes/admin.conf "$HOME"/.kube/config

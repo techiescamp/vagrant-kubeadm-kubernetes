@@ -36,3 +36,4 @@ software:
   dashboard: 2.7.0
   kubernetes: 1.26.1-00
   os: xUbuntu_22.04
+  # image_repository: # image repository for `kubeadm config images pull`

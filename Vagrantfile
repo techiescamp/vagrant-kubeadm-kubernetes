@@ -49,7 +49,8 @@ Vagrant.configure("2") do |config|
         "CALICO_VERSION" => settings["software"]["calico"],
         "CONTROL_IP" => settings["network"]["control_ip"],
         "POD_CIDR" => settings["network"]["pod_cidr"],
-        "SERVICE_CIDR" => settings["network"]["service_cidr"]
+        "SERVICE_CIDR" => settings["network"]["service_cidr"],
+        "IMAGE_REPOSITORY" => settings["software"]["image_repository"],
       },
       path: "scripts/master.sh"
   end
