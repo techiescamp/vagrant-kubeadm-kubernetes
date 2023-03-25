@@ -48,6 +48,7 @@ Vagrant.configure("2") do |config|
         "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
         "OS" => settings["software"]["os"],
         "ALLOW_UNAUTHENTICATED" => settings["software"]["allow_unauthenticated"],
+        "KUBERNETES_SOURCE" => settings["software"]["kubernetes_source"] || "https://apt.kubernetes.io/",
       },
       path: "scripts/common.sh"
     master.vm.provision "shell",
@@ -90,6 +91,7 @@ Vagrant.configure("2") do |config|
           "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
           "OS" => settings["software"]["os"],
           "ALLOW_UNAUTHENTICATED" => settings["software"]["allow_unauthenticated"],
+          "KUBERNETES_SOURCE" => settings["software"]["kubernetes_source"] || "https://apt.kubernetes.io/",
         },
         path: "scripts/common.sh"
       node.vm.provision "shell", path: "scripts/node.sh"

@@ -37,4 +37,5 @@ software:
   kubernetes: 1.26.1-00
   os: xUbuntu_22.04
   # allow_unauthenticated: true
+  # kubernetes_source: # apt source for installing kubernetes, default is https://apt.kubernetes.io/
   # image_repository: # image repository for `kubeadm config images pull`
