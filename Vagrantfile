@@ -29,6 +29,11 @@ Vagrant.configure("2") do |config|
         master.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
       end
     end
+    if settings["network"]["dns_servers"]
+      dns_servers = settings["network"]["dns_servers"].join(" ")
+    else
+      dns_servers = ""
+    end
     master.vm.provider "virtualbox" do |vb|
         vb.cpus = settings["nodes"]["control"]["cpu"]
         vb.memory = settings["nodes"]["control"]["memory"]
@@ -38,7 +43,7 @@ Vagrant.configure("2") do |config|
     end
     master.vm.provision "shell",
       env: {
-        "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+        "DNS_SERVERS" => dns_servers,
         "ENVIRONMENT" => settings["environment"],
         "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
         "OS" => settings["software"]["os"]
@@ -65,6 +70,11 @@ Vagrant.configure("2") do |config|
           node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
         end
       end
+      if settings["network"]["dns_servers"]
+        dns_servers = settings["network"]["dns_servers"].join(" ")
+      else
+        dns_servers = ""
+      end
       node.vm.provider "virtualbox" do |vb|
           vb.cpus = settings["nodes"]["workers"]["cpu"]
           vb.memory = settings["nodes"]["workers"]["memory"]
@@ -74,7 +84,7 @@ Vagrant.configure("2") do |config|
       end
       node.vm.provision "shell",
         env: {
-          "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+          "DNS_SERVERS" => dns_servers,
           "ENVIRONMENT" => settings["environment"],
           "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
           "OS" => settings["software"]["os"]

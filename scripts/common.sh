@@ -7,13 +7,15 @@ set -euxo pipefail
 # Variable Declaration
 
 # DNS Setting
-sudo mkdir /etc/systemd/resolved.conf.d/
+if [ -n "$DNS_SERVERS" ]; then
+sudo mkdir -p /etc/systemd/resolved.conf.d/
 cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
 [Resolve]
 DNS=${DNS_SERVERS}
 EOF
 
 sudo systemctl restart systemd-resolved
+fi
 
 # disable swap
 sudo swapoff -a
