@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
       done
   SHELL
 
-  if RbConfig::CONFIG['host_cpu'] =~ /aarch64/
+  if `uname -m`.strip == "aarch64"
     config.vm.box = settings["software"]["box"] + "-arm64"
   else
     config.vm.box = settings["software"]["box"]
