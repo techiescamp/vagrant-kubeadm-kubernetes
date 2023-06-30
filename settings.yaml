@@ -21,7 +21,7 @@ nodes:
     cpu: 2
     memory: 4096
   workers:
-    count: 1
+    count: 2
     cpu: 1
     memory: 2048
 # Mount additional shared folders from the host into each virtual machine.
