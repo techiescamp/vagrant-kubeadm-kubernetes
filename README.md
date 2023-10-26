@@ -9,11 +9,10 @@ Refer to this link for documentation: https://devopscube.com/kubernetes-cluster-
 
 ## 🚀 CKA, CKAD, CKS, or KCNA Coupon Codes
 
-🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save $80** today using code **DCUBE20** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
+- 🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save 40%** today using code **SCARYTECHIES** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
+- For the best savings, opt for the CKA + CKS bundle (**$355 Savings)**. Use code **SCARYTECHIES** at https://kube.promo/bundle
 
-For the best savings, opt for the CKA + CKS bundle (**$210 Savings)**. Use code **DCUBE20** at https://kube.promo/bundle
 >Note: You have one year of validity to appear for the certification exam after registration
-
 
 ## Prerequisites
 
@@ -24,7 +23,7 @@ For the best savings, opt for the CKA + CKS bundle (**$210 Savings)**. Use code 
 
 The latest version of Virtualbox for Mac/Linux can cause issues.
 
-Create/edit the /etc/vbox/networks.conf file and add the following to avoid any network related issues.
+Create/edit the /etc/vbox/networks.conf file and add the following to avoid any network-related issues.
 <pre>* 0.0.0.0/0 ::/0</pre>
 
 or run below commands
