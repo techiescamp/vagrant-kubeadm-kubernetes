@@ -9,9 +9,10 @@ Refer to this link for documentation: https://devopscube.com/kubernetes-cluster-
 
 ## CKA, CKAD, CKS, or KCNA Coupon Codes
 
-🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save $80** today using code **DCUBE20** at https://kube.promo/devops. It is a limited-time offer from Linux Foundation.
+- 🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save 65%** today using code **CYBER23CC** at https://kube.promo/cyber. It is a limited-time offer from the Linux Foundation.
+- For the best savings, opt for the CKA + CKS bundle. Use code **CYBER23CC** at https://kube.promo/bundle
 
-For the best savings, opt for the CKA + CKS bundle (**$210 Savings)**. Use code **DCUBE20** at https://kube.promo/bundle
+🎁 You will also get a free gift with every purchase.
 
 Also Check the [Linux Foundation Coupon]( https://scriptcrunch.com/linux-foundation-coupon/) page to get the latest coupons.
 
