@@ -3,6 +3,8 @@
 export KUBEDIR=$HOME/.kube
 export CONFIGLOCAL='../configs/config'
 
+cd $(dirname $0)
+
 if [ ! -f $CONFIGLOCAL ]; then
 	echo "../configs/config doesn't exist."
 	exit	
