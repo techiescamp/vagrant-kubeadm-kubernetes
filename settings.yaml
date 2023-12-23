@@ -30,6 +30,7 @@ nodes:
 #   - host_path: ../images
 #     vm_path: /vagrant/images
 software:
+  #box: bento/debian-12
   box: bento/ubuntu-22.04
   calico: 3.26.0
   # To skip the dashboard installation, set its version to an empty value or comment it out:
