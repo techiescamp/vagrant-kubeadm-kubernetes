@@ -34,5 +34,5 @@ software:
   calico: 3.26.0
   # To skip the dashboard installation, set its version to an empty value or comment it out:
   dashboard: 2.7.0
-  kubernetes: 1.28.2-00
+  kubernetes: 1.28.2-*
   os: xUbuntu_22.04
