@@ -81,6 +81,7 @@ Vagrant.configure("2") do |config|
           "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
           "ENVIRONMENT" => settings["environment"],
           "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
+          "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
           "OS" => settings["software"]["os"]
         },
         path: "scripts/common.sh"
