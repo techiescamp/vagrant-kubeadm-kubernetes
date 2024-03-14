@@ -13,6 +13,7 @@ This document outlines all significant changes made to the project.
 - Renamed node names from `"master"` to `"controlplane"` to align with the Kubernetes certification environment.
 - Updated VM hostnames to follow the format of `"controlplane"` and `"node"`.
 - Upgraded Kubernetes version to `1.29.x`.
+- Updated CRIO apt repo to the official repo.
 
 ### Fixed
 
