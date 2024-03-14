@@ -1,11 +1,23 @@
 
 # Vagrantfile and Scripts to Automate Kubernetes Setup using Kubeadm [Practice Environment for CKA/CKAD and CKS Exams]
 
+A fully automated setup for CKA, CKAD, and CKS practice labs is tested on the following systems:
+
+- Windows
+- Ubuntu Desktop
+- Mac Intel-based systems
+
+## Prerequisites
+
+- A working Vagrant setup using Vagrant + VirtualBox
+
 ## Documentation
 
-Current k8s version for CKA, CKAD, and CKS exam: 1.28
+Current k8s version for CKA, CKAD, and CKS exam: 1.29. 
 
-Refer to this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
+The setup is updated with 1.29 cluster version.
+
+Refer to this link for documentation full: https://devopscube.com/kubernetes-cluster-vagrant/
 
 ## CKA, CKAD, CKS, or KCNA Coupon Codes
 
@@ -20,7 +32,6 @@ The following are the best bundles to **save Extra 40%** with code **LUCK24CT**
 - KCNA + CKA ( $288 Savings) [kube.promo/kcka-bundle](https://kube.promo/kcna-cka)
 
 >Note: You have one year of validity to appear for the certification exam after registration
-
 
 ## Prerequisites
 

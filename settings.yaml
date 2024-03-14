@@ -21,7 +21,7 @@ nodes:
     cpu: 2
     memory: 4096
   workers:
-    count: 1
+    count: 2
     cpu: 1
     memory: 2048
 # Mount additional shared folders from the host into each virtual machine.
@@ -34,5 +34,5 @@ software:
   calico: 3.26.0
   # To skip the dashboard installation, set its version to an empty value or comment it out:
   dashboard: 2.7.0
-  kubernetes: 1.28.2-00
+  kubernetes: 1.29.0-1.1
   os: xUbuntu_22.04
