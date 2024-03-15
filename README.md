@@ -94,7 +94,7 @@ To get the login token, copy it from _config/token_ or run the following command
 kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}"
 ```
 
-Proxy the dashboard:
+Make the dashboard accessible:
 ```shell
 kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 443 
 ```
