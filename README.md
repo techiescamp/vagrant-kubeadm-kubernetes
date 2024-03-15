@@ -84,7 +84,7 @@ The dashboard is automatically installed by default, but it can be skipped by co
 
 If you skip the dashboard installation, you can deploy it later by enabling it in _settings.yaml_ and running the following:
 ```shell
-vagrant ssh -c "/vagrant/scripts/dashboard.sh" master
+vagrant ssh -c "/vagrant/scripts/dashboard.sh" controlplane
 ```
 
 ## Kubernetes Dashboard Access
