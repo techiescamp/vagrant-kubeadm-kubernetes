@@ -1,20 +1,35 @@
 
 # Vagrantfile and Scripts to Automate Kubernetes Setup using Kubeadm [Practice Environment for CKA/CKAD and CKS Exams]
 
+A fully automated setup for CKA, CKAD, and CKS practice labs is tested on the following systems:
+
+- Windows
+- Ubuntu Desktop
+- Mac Intel-based systems
+
+## Prerequisites
+
+- A working Vagrant setup using Vagrant + VirtualBox
+
 ## Documentation
 
-Current k8s version for CKA, CKAD, and CKS exam: 1.27
+Current k8s version for CKA, CKAD, and CKS exam: 1.29. 
 
-Refer to this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
+The setup is updated with 1.29 cluster version.
+
+Refer to this link for documentation full: https://devopscube.com/kubernetes-cluster-vagrant/
 
 ## CKA, CKAD, CKS, or KCNA Coupon Codes
 
-- 🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save 65%** today using code **CYBER23CC** at https://kube.promo/cyber. It is a limited-time offer from the Linux Foundation.
-- For the best savings, opt for the CKA + CKS bundle. Use code **CYBER23CC** at https://kube.promo/bundle
+As part of our commitment to helping the DevOps community save money on Kubernetes Certifications, we continuously update the latest voucher codes from the Linux Foundation
 
-🎁 You will also get a free gift with every purchase.
+🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save $100** today using code **LUCK24COM** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
 
-Also Check the [Linux Foundation Coupon]( https://scriptcrunch.com/linux-foundation-coupon/) page to get the latest coupons.
+The following are the best bundles to **save Extra 40%** with code **LUCK24CT**
+
+- CKA + CKAD + CKS Exam bundle ($526 Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
+- CKA + CKS Bundle ($355 Savings) [kube.promo/bundle](https://kube.promo/bundle)
+- KCNA + CKA ( $288 Savings) [kube.promo/kcka-bundle](https://kube.promo/kcna-cka)
 
 >Note: You have one year of validity to appear for the certification exam after registration
 
