@@ -7,6 +7,10 @@ A fully automated setup for CKA, CKAD, and CKS practice labs is tested on the fo
 - Ubuntu Desktop
 - Mac Intel-based systems
 
+If you are MAC Silicon user, Please use the follwing repo.
+
+- [Vagrant Kubeadm Setup on MAC Silicon](https://github.com/techiescamp/vagrant-kubeadm-mac-silicon)
+
 ## Prerequisites
 
 - A working Vagrant setup using Vagrant + VirtualBox
