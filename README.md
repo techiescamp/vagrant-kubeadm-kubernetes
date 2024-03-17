@@ -96,12 +96,12 @@ kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.to
 
 Make the dashboard accessible:
 ```shell
-kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 443 
+kubectl proxy
 ```
 
 Open the site in your browser:
 ```shell
-https://localhost
+[https://localhost](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login)
 ```
 
 ## To shutdown the cluster,
