@@ -61,7 +61,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable crio --now
 sudo systemctl start crio.service
 
-echo "CRI runtime installed susccessfully"
+echo "CRI runtime installed successfully"
 
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v$KUBERNETES_VERSION_SHORT/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
