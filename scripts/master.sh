@@ -29,10 +29,9 @@ else
 fi
 
 cp -i /etc/kubernetes/admin.conf $config_path/config
-touch $config_path/join.sh
-chmod +x $config_path/join.sh
 
 kubeadm token create --print-join-command > $config_path/join.sh
+chmod +x $config_path/join.sh
 
 # Install Calico Network Plugin
 
