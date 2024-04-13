@@ -30,7 +30,8 @@ Use code **SCRIPT20** to save $326 with the following bundle.
 
 ## Setup Prerequisites
 
-- A working Vagrant setup using Vagrant + VirtualBox
+- A working Vagrant setup using Vagrant with VirtualBox or libvirt available
+- If using libvirt user needs to be added to libvirt group (`sudo usermod -aG libvirt $(whoami)`)
 
 ## Documentation
 
@@ -47,6 +48,7 @@ Refer to this link for documentation full: https://devopscube.com/kubernetes-clu
 2. 8 Gig + RAM workstation as the Vms use 3 vCPUS and 4+ GB RAM
 
 ## For MAC/Linux Users
+## For MAC/Linux Users with VirtualBox
 
 The latest version of Virtualbox for Mac/Linux can cause issues.
 
@@ -70,8 +72,15 @@ To provision the cluster, execute the following commands.
 ```shell
 git clone https://github.com/scriptcamp/vagrant-kubeadm-kubernetes.git
 cd vagrant-kubeadm-kubernetes
-vagrant up
+vagrant up --provider virtualbox
 ```
+
+To use libvirt/KVM instead use:
+
+```shell
+vagrant up --provider libvirt
+```
+
 ## Set Kubeconfig file variable
 
 ```shell
