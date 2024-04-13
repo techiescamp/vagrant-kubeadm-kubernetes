@@ -47,7 +47,34 @@ Refer to this link for documentation full: https://devopscube.com/kubernetes-clu
 1. Working Vagrant setup
 2. 8 Gig + RAM workstation as the Vms use 3 vCPUS and 4+ GB RAM
 
-## For MAC/Linux Users
+
+## Firewall Configuration
+
+To allow virtual machines to access NFS server on the host machine you will probably need to update firewall rules.
+
+### Rules for VirtualBox
+
+```shell
+sudo firewall-cmd --permanent --new-zone=virtualbox \
+  && sudo firewall-cmd --permanent --zone=virtualbox --add-interface=vboxnet0 \
+  && sudo firewall-cmd --permanent --zone=virtualbox --add-interface=vboxnet1 \
+  && sudo firewall-cmd --permanent --zone=virtualbox --add-service=nfs3 \
+  && sudo firewall-cmd --permanent --zone=virtualbox --add-service=nfs \
+  && sudo firewall-cmd --permanent --zone=virtualbox --add-service=rpc-bind \
+  && sudo firewall-cmd --permanent --zone=virtualbox --add-service=mountd \
+  && sudo firewall-cmd --reload
+```
+
+### Rules for libvirt
+
+```shell
+sudo firewall-cmd --permanent --zone=libvirt --add-service=nfs3 \
+  && sudo firewall-cmd --permanent --zone=libvirt --add-service=nfs \
+  && sudo firewall-cmd --permanent --zone=libvirt --add-service=rpc-bind \
+  && sudo firewall-cmd --permanent --zone=libvirt --add-service=mountd \
+  && sudo firewall-cmd --reload
+```
+
 ## For MAC/Linux Users with VirtualBox
 
 The latest version of Virtualbox for Mac/Linux can cause issues.
