@@ -98,10 +98,15 @@ To provision the cluster, execute the following commands.
 ```shell
 git clone https://github.com/scriptcamp/vagrant-kubeadm-kubernetes.git
 cd vagrant-kubeadm-kubernetes
+```
+
+### With VirtualBox
+
+```shell
 vagrant up --provider virtualbox
 ```
 
-To use libvirt/KVM instead use:
+### With libvirt
 
 ```shell
 vagrant up --provider libvirt
