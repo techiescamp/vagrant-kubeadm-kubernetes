@@ -116,14 +116,14 @@ vagrant up --provider libvirt
 
 ```shell
 cd vagrant-kubeadm-kubernetes
-cd configs
-export KUBECONFIG=$(pwd)/config
+
+export KUBECONFIG=$(pwd)/configs/config
 ```
 
 or you can copy the config file to .kube directory.
 
 ```shell
-cp config ~/.kube/
+cp configs/config ~/.kube/
 ```
 
 ## Install Kubernetes Dashboard
