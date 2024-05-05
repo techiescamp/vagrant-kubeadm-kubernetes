@@ -1,0 +1,20 @@
+# Google Reame Changelog
+
+This document outlines all significant changes made to the project.
+
+## [1.0.0] - 2024-03-14
+
+### Added
+
+- **CHANGELOG file**
+
+### Changed
+
+- Renamed node names from `"master"` to `"controlplane"` to align with the Kubernetes certification environment.
+- Updated VM hostnames to follow the format of `"controlplane"` and `"node"`.
+- Upgraded Kubernetes version to `1.29.x`.
+- Updated CRIO apt repo to the official repo.
+
+### Fixed
+
+- Updated the Kubernetes source repository to the latest version to address user-reported issues and ensure access to the latest versions.
