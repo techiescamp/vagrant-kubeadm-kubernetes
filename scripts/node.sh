@@ -6,6 +6,11 @@ set -euxo pipefail
 
 config_path="/vagrant/configs"
 
+while [ ! -x $config_path/join.sh ]; do
+    echo "Waiting for master.sh to finish..."
+    sleep 15
+done
+
 /bin/bash $config_path/join.sh -v
 
 sudo -i -u vagrant bash << EOF

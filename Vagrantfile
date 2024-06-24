@@ -11,6 +11,13 @@ IP_START = Integer(IP_SECTIONS.captures[1])
 NUM_WORKER_NODES = settings["nodes"]["workers"]["count"]
 
 Vagrant.configure("2") do |config|
+  config.vm.synced_folder "./", "/vagrant", type: "nfs", nfs_version: 4
+
+  config.vm.provider "libvirt" do |libvirt|
+      libvirt.uri = "qemu:///system"
+      libvirt.driver = "qemu"
+  end
+
   config.vm.provision "shell", env: { "IP_NW" => IP_NW, "IP_START" => IP_START, "NUM_WORKER_NODES" => NUM_WORKER_NODES }, inline: <<-SHELL
       apt-get update -y
       echo "$IP_NW$((IP_START)) controlplane" >> /etc/hosts
@@ -34,6 +41,7 @@ Vagrant.configure("2") do |config|
         controlplane.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
       end
     end
+
     controlplane.vm.provider "virtualbox" do |vb|
         vb.cpus = settings["nodes"]["control"]["cpu"]
         vb.memory = settings["nodes"]["control"]["memory"]
@@ -41,6 +49,12 @@ Vagrant.configure("2") do |config|
           vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
         end
     end
+
+    controlplane.vm.provider "libvirt" do |vb|
+        vb.cpus = settings["nodes"]["control"]["cpu"]
+        vb.memory = settings["nodes"]["control"]["memory"]
+    end
+
     controlplane.vm.provision "shell",
       env: {
         "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
@@ -70,6 +84,7 @@ Vagrant.configure("2") do |config|
           node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
         end
       end
+
       node.vm.provider "virtualbox" do |vb|
           vb.cpus = settings["nodes"]["workers"]["cpu"]
           vb.memory = settings["nodes"]["workers"]["memory"]
@@ -77,6 +92,12 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
           end
       end
+
+      node.vm.provider "libvirt" do |vb|
+          vb.cpus = settings["nodes"]["workers"]["cpu"]
+          vb.memory = settings["nodes"]["workers"]["memory"]
+      end
+
       node.vm.provision "shell",
         env: {
           "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
