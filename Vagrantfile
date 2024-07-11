@@ -2,6 +2,7 @@
 require "yaml"
 vagrant_root = File.dirname(File.expand_path(__FILE__))
 settings = YAML.load_file "#{vagrant_root}/settings.yaml"
+autostart = settings["autostart"]
 
 IP_SECTIONS = settings["network"]["control_ip"].match(/^([0-9.]+\.)([^.]+)$/)
 # First 3 octets including the trailing dot:
@@ -16,6 +17,8 @@ Vagrant.configure("2") do |config|
   config.vm.provider "libvirt" do |libvirt|
       libvirt.uri = "qemu:///system"
       libvirt.driver = "qemu"
+      libvirt.management_network_autostart = autostart
+      libvirt.autostart = autostart
   end
 
   config.vm.provision "shell", env: { "IP_NW" => IP_NW, "IP_START" => IP_START, "NUM_WORKER_NODES" => NUM_WORKER_NODES }, inline: <<-SHELL
@@ -35,7 +38,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "controlplane" do |controlplane|
     controlplane.vm.hostname = "controlplane"
-    controlplane.vm.network "private_network", ip: settings["network"]["control_ip"]
+    controlplane.vm.network "private_network", ip: settings["network"]["control_ip"], autostart: autostart
+
     if settings["shared_folders"]
       settings["shared_folders"].each do |shared_folder|
         controlplane.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
@@ -64,6 +68,7 @@ Vagrant.configure("2") do |config|
         "OS" => settings["software"]["os"]
       },
       path: "scripts/common.sh"
+
     controlplane.vm.provision "shell",
       env: {
         "CALICO_VERSION" => settings["software"]["calico"],
@@ -78,7 +83,8 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "node0#{i}" do |node|
       node.vm.hostname = "node0#{i}"
-      node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}"
+      node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}", autostart: autostart
+
       if settings["shared_folders"]
         settings["shared_folders"].each do |shared_folder|
           node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
@@ -107,6 +113,7 @@ Vagrant.configure("2") do |config|
           "OS" => settings["software"]["os"]
         },
         path: "scripts/common.sh"
+
       node.vm.provision "shell", path: "scripts/node.sh"
 
       # Only install the dashboard after provisioning the last worker (and when enabled).
