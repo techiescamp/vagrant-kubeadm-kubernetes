@@ -11,25 +11,24 @@ If you are MAC Silicon user, Please use the follwing repo.
 
 - [Vagrant Kubeadm Setup on MAC Silicon](https://github.com/techiescamp/vagrant-kubeadm-mac-silicon)
 
-## CKA, CKAD, CKS, or KCNA Vouchers Codes (41% OFF)
+## CKA, CKAD, CKS, KCNA & KCSA Vouchers Codes (35% OFF)
 
 As part of our commitment to helping the DevOps community save money on Kubernetes Certifications, we continuously update the latest voucher codes from the Linux Foundation
 
->Note: This offer expires very soon
+🚀  CKA, CKAD, CKS,KCNA or KCSA exam aspirants can **save 20%** today using code **DCUBE20** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
 
-🚀  CKA, CKAD, CKS, or KCNA exam aspirants can **save 40%** today using code **K8S10YEARSCT** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
+The following are the best bundles to **save up to 35%** with code **COMBUNDLE25**
 
-The following are the best bundles to **save upto 40% (up to $818)** with code **K8S10YEARSCT**
-
-- KCNA + KCSA + CKA + CKAD + CKS ($818 Savings): [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
-- CKA + CKAD + CKS Exam bundle ($528 Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 - CKA + CKS Bundle ($355 Savings) [kube.promo/bundle](https://kube.promo/bundle)
 - KCNA + CKA ( $288 Savings) [kube.promo/kcka-bundle](https://kube.promo/kcna-cka)
+
+Use code **SCRIPT20** to save $326 with the following bundle.
+
+- CKA + CKAD + CKS Exam bundle ($419 Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 - KCSA + CKS Exam Bundle ($229 Savings) [kube.promo/kcsa-cks](https://kube.promo/kcsa-cks)
 - KCNA + KCSA Exam Bundle ($203 Savings) [kube.promo/kcna-kcsa](https://kube.promo/kcna-kcsa)
 
 >Note: You have one year of validity to appear for the certification exam after registration
-
 
 ## Setup Prerequisites
 
