@@ -132,3 +132,45 @@ vagrant up
 vagrant destroy -f
 ```
 
+# Network graph
+
+```
+                  +-------------------+
+                  |    External       |
+                  |  Network/Internet |
+                  +-------------------+
+                           |
+                           |
+             +-------------+--------------+
+             |        Host Machine        |
+             |     (Internet Connection)  |
+             +-------------+--------------+
+                           |
+                           | NAT
+             +-------------+--------------+
+             |    K8s-NATNetwork          |
+             |    192.168.99.0/24         |
+             +-------------+--------------+
+                           |
+                           |
+             +-------------+--------------+
+             |     k8s-Switch (Internal)  |
+             |       192.168.99.1/24      |
+             +-------------+--------------+
+                  |        |        |
+                  |        |        |
+          +-------+--+ +---+----+ +-+-------+
+          |  Master  | | Worker | | Worker  |
+          |   Node   | | Node 1 | | Node 2  |
+          |192.168.99| |192.168.| |192.168. |
+          |   .99    | | 99.81  | | 99.82   |
+          +----------+ +--------+ +---------+
+```
+
+This network graph shows:
+
+1. The host machine connected to the external network/internet.
+2. The NAT network (K8s-NATNetwork) providing a bridge between the internal network and the external network.
+3. The internal Hyper-V switch (k8s-Switch) connecting all the Kubernetes nodes.
+4. The master node and two worker nodes, each with their specific IP addresses, all connected to the internal switch.
+
