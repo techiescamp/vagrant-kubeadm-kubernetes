@@ -11,7 +11,7 @@ If you are MAC Silicon user, Please use the follwing repo.
 
 - [Vagrant Kubeadm Setup on MAC Silicon](https://github.com/techiescamp/vagrant-kubeadm-mac-silicon)
 
-## CKA, CKAD, CKS, KCNA & KCSA Vouchers Codes (35% OFF)
+## CKA, CKAD, CKS, KCNA & KCSA Vouchers Codes (40% OFF)
 
 As part of our commitment to helping the DevOps community save money on Kubernetes Certifications, we continuously update the latest voucher codes from the Linux Foundation
 
