@@ -1,6 +1,8 @@
 ---
 # cluster_name is used to group the nodes in a folder within VirtualBox:
 cluster_name: Kubernetes Cluster
+# Tell libvirt to automatically start machines when host is booting up
+autostart: true
 # Uncomment to set environment variables for services such as crio and kubelet.
 # For example, configure the cluster to pull images via a proxy.
 # environment: |
@@ -21,8 +23,8 @@ nodes:
     cpu: 2
     memory: 4096
   workers:
-    count: 2
-    cpu: 1
+    count: 3
+    cpu: 2
     memory: 2048
 # Mount additional shared folders from the host into each virtual machine.
 # Note that the project directory is automatically mounted at /vagrant.
@@ -30,10 +32,10 @@ nodes:
 #   - host_path: ../images
 #     vm_path: /vagrant/images
 software:
-  box: bento/ubuntu-22.04
+  box: generic/ubuntu2204
   calico: 3.26.0
   # To skip the dashboard installation, set its version to an empty value or comment it out:
-  dashboard: 2.7.0
+  dashboard:
   kubernetes: 1.29.0-*
 
   os: xUbuntu_22.04
