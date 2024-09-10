@@ -34,9 +34,9 @@ The following are the best bundles to **save 40% (up to $788)** with code **30CO
 
 ## Documentation
 
-Current k8s version for CKA, CKAD, and CKS exam: 1.29. 
+Current k8s version for CKA, CKAD, and CKS exam: 1.30
 
-The setup is updated with 1.29 cluster version.
+The setup is updated with 1.31 cluster version.
 
 Refer to this link for documentation full: https://devopscube.com/kubernetes-cluster-vagrant/
 
