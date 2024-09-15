@@ -12,20 +12,20 @@ autostart: true
 # All IPs/CIDRs should be private and allowed in /etc/vbox/networks.conf.
 network:
   # Worker IPs are simply incremented from the control IP.
-  control_ip: 10.0.0.10
+  control_ip: 10.1.0.10
   dns_servers:
     - 8.8.8.8
     - 1.1.1.1
-  pod_cidr: 172.16.1.0/16
-  service_cidr: 172.17.1.0/18
+  pod_cidr: 172.16.2.0/16
+  service_cidr: 172.17.2.0/18
 nodes:
   control:
-    cpu: 2
+    cpu: 6
     memory: 4096
   workers:
     count: 3
     cpu: 2
-    memory: 2048
+    memory: 4096
 # Mount additional shared folders from the host into each virtual machine.
 # Note that the project directory is automatically mounted at /vagrant.
 # shared_folders:
