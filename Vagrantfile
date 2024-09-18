@@ -49,8 +49,14 @@ Vagrant.configure("2") do |config|
     controlplane.vm.provider "virtualbox" do |vb|
         vb.cpus = settings["nodes"]["control"]["cpu"]
         vb.memory = settings["nodes"]["control"]["memory"]
+
         if settings["cluster_name"] and settings["cluster_name"] != ""
           vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
+        end
+
+        if autostart
+          vb.customize ["modifyvm", :id, "--autostart-enabled", "on"]
+          vb.customize ["modifyvm", :id, "--autostop-type", "acpishutdown"]
         end
     end
 
@@ -97,8 +103,14 @@ Vagrant.configure("2") do |config|
       node.vm.provider "virtualbox" do |vb|
           vb.cpus = settings["nodes"]["workers"]["cpu"]
           vb.memory = settings["nodes"]["workers"]["memory"]
+
           if settings["cluster_name"] and settings["cluster_name"] != ""
             vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
+          end
+
+          if autostart
+            vb.customize ["modifyvm", :id, "--autostart-enabled", "on"]
+            vb.customize ["modifyvm", :id, "--autostop-type", "acpishutdown"]
           end
       end
 
