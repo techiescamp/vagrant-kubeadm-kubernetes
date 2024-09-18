@@ -98,6 +98,7 @@ To provision the cluster, execute the following commands.
 ```shell
 git clone https://github.com/scriptcamp/vagrant-kubeadm-kubernetes.git
 cd vagrant-kubeadm-kubernetes
+cp settings.yaml.sample settings.yaml
 ```
 
 ### With VirtualBox
