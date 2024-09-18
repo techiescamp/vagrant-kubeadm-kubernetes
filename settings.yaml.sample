@@ -38,3 +38,6 @@ software:
   dashboard:
   kubernetes: 1.31.1-*
   os: xUbuntu_22.04
+  # Pick either cri-o or containerd
+  cri: cri-o
+  cri-version: 1.30.4-*

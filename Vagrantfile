@@ -65,7 +65,10 @@ Vagrant.configure("2") do |config|
         "ENVIRONMENT" => settings["environment"],
         "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
         "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
-        "OS" => settings["software"]["os"]
+        "OS" => settings["software"]["os"],
+        "CRI" => settings["software"]["cri"],
+        "CRI_VERSION" => settings["software"]["cri-version"],
+        "CRI_VERSION_SHORT" => settings["software"]["cri-version"][0..3],
       },
       path: "scripts/common.sh"
 
@@ -110,7 +113,10 @@ Vagrant.configure("2") do |config|
           "ENVIRONMENT" => settings["environment"],
           "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
           "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
-          "OS" => settings["software"]["os"]
+          "OS" => settings["software"]["os"],
+          "CRI" => settings["software"]["cri"],
+          "CRI_VERSION" => settings["software"]["cri-version"],
+          "CRI_VERSION_SHORT" => settings["software"]["cri-version"][0..3],
         },
         path: "scripts/common.sh"
 
