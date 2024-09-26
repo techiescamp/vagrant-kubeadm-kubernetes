@@ -134,6 +134,10 @@ Vagrant.configure("2") do |config|
 
       node.vm.provision "shell", path: "scripts/node.sh"
 
+      if File.exist?("scripts/customize-node.sh")
+        node.vm.provision "shell", path: "scripts/customize-node.sh"
+      end
+
       # Only install the dashboard after provisioning the last worker (and when enabled).
       if i == NUM_WORKER_NODES and settings["software"]["dashboard"] and settings["software"]["dashboard"] != ""
         node.vm.provision "shell", path: "scripts/dashboard.sh"
