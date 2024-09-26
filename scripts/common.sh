@@ -4,6 +4,12 @@
 
 set -euxo pipefail
 
+# Check if /vagrant is correctly mounted through NFS
+if ! mount | grep -q 'on /vagrant type nfs'; then
+  echo "/vagrant is not mounted through NFS, check your firewall settings"
+  exit 1
+fi
+
 # Variable Declaration
 
 # DNS Setting
