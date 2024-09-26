@@ -32,6 +32,12 @@ The following are the best bundles to save 47% (up to $800 ) with code OSSEU24IC
 
 - A working Vagrant setup using Vagrant + VirtualBox
 
+Here is the high level workflow.
+
+<p align="center">
+  <img src="https://github.com/techiescamp/vagrant-kubeadm-mac-silicon/assets/106984297/8410a3d1-0d78-4f67-b9ae-01115d06b9ca" width="65%" />
+</p>
+
 ## Documentation
 
 Current k8s version for CKA, CKAD, and CKS exam: 1.30
