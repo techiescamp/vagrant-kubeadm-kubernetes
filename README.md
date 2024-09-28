@@ -34,11 +34,9 @@ The following are the best bundles to save 47% (up to $800 ) with code **OSSEU24
 
 Here is the high level workflow.
 
-![vagrant](https://github.com/user-attachments/assets/cc5594b5-42c2-4c56-be21-6441f849f537)
-
 
 <p align="center">
-  <img src="https://github.com/techiescamp/vagrant-kubeadm-mac-silicon/assets/106984297/8410a3d1-0d78-4f67-b9ae-01115d06b9ca" width="65%" />
+  <img src="https://github.com/user-attachments/assets/cc5594b5-42c2-4c56-be21-6441f849f537" width="65%" />
 </p>
 
 ## Documentation
