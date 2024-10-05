@@ -114,7 +114,8 @@ apt-mark hold kubelet kubectl kubeadm
 
 local_ip="$(ip --json a s | jq -r '.[] | select(.ifname == "eth1") | .addr_info[] | select(.family == "inet") | .local')"
 
+mkdir -p /etc/kubernetes/kubelet.conf.d
 cat > /etc/default/kubelet << EOF
-KUBELET_EXTRA_ARGS=--node-ip=$local_ip
+KUBELET_EXTRA_ARGS="--node-ip=$local_ip --config-dir=/etc/kubernetes/kubelet.conf.d"
 ${ENVIRONMENT}
 EOF
