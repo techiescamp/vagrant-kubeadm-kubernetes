@@ -1,4 +1,3 @@
-
 require "yaml"
 vagrant_root = File.dirname(File.expand_path(__FILE__))
 settings = YAML.load_file "#{vagrant_root}/settings.yaml"
@@ -47,7 +46,8 @@ Vagrant.configure("2") do |config|
         "ENVIRONMENT" => settings["environment"],
         "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
         "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
-        "OS" => settings["software"]["os"]
+        "OS" => settings["software"]["os"],
+        "CONTAINER_RUNTIME" => settings["software"]["container_runtime"]
       },
       path: "scripts/common.sh"
     controlplane.vm.provision "shell",
@@ -83,7 +83,8 @@ Vagrant.configure("2") do |config|
           "ENVIRONMENT" => settings["environment"],
           "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
           "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
-          "OS" => settings["software"]["os"]
+          "OS" => settings["software"]["os"],
+          "CONTAINER_RUNTIME" => settings["software"]["container_runtime"]
         },
         path: "scripts/common.sh"
       node.vm.provision "shell", path: "scripts/node.sh"
@@ -95,4 +96,4 @@ Vagrant.configure("2") do |config|
     end
 
   end
-end 
+end
