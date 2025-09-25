@@ -11,14 +11,14 @@ If you are MAC Silicon user, Please use the following repo.
 
 - [Vagrant Kubeadm Setup on MAC Silicon](https://github.com/techiescamp/vagrant-kubeadm-mac-silicon)
 
-## Kubernetes Certification Voucher (UpTo 55% OFF) 🎉
+## Kubernetes Certification Voucher (UpTo 65% OFF) 🎉
 
 As part of our commitment to helping the DevOps community save money on Kubernetes Certifications, we continuously update the latest voucher codes from the Linux Foundation
 
 > [!IMPORTANT]
-> 🚀  Kubernetes Certification aspirants can **save 40%** today using code **SEPT25CT** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
+> 🚀  Kubernetes Certification aspirants can **save 30%** today using code **DCUBE30** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
 
-The following are the best bundles to **save upto 55%** with code **SEPT25CT**
+The following are the best bundles to **save upto 65%** with code **SEPT25BUN50**
 
 - KCNA + KCSA + CKA + CKAD + CKS (55% Savings): [kube.promo/kubestronaut](https://kube.promo/kubestronaut)
 - CKA + CKAD + CKS Exam bundle (47% Savings): [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
@@ -30,7 +30,16 @@ The following are the best bundles to **save upto 55%** with code **SEPT25CT**
 > [!NOTE]
 >⌛ Act fast—this limited-time offer won’t be around much longer!
 
-> If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam? Check out our [Complete CKA Certification Course](https://techiescamp.com/p/cka-complete-prep-course-practice-tests). It includes illustrations, hands-on exercises, real-world examples, and dedicated Discord support. Use code **DCUBE30** to get 30% OFF! .
+## Organized Kubernetes & CKA Learning
+
+If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam with practice questions? 
+
+> Check out our [Complete CKA Certification Course](https://courses.devopscube.com/p/cka-complete-prep-course-practice-tests). 
+
+It includes illustrations, hands-on exercises, real-world examples, and dedicated Discord support. 
+
+> [!NOTE]
+>⌛ For a lmited time, use code **DCUBE30** to get 30% OFF today!
 
 ## Setup Prerequisites
 
