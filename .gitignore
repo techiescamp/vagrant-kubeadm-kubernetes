@@ -1,6 +1,11 @@
 # General
 .vagrant/
 configs/
+containerd-cache/
+storage-reports/
+
+# OpenEBS Mayastor storage VDI files (large binary disk images)
+*.vdi
 
 # Log files (if you are creating logs in debug mode, uncomment this)
 # *.log

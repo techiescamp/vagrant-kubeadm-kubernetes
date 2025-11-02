@@ -1,6 +1,34 @@
 ---
 # cluster_name is used to group the nodes in a folder within VirtualBox:
 cluster_name: Kubernetes Cluster
+
+# VirtualBox-specific optimizations (applies to ALL VMs: control plane, workers, storage nodes)
+virtualbox:
+  # Enable VirtualBox performance optimizations (APPLIES TO ALL VMs)
+  optimize: true  # Recommended: Enables I/O APIC and KVM paravirtualization
+  # When enabled, applies to ALL VMs (controlplane, workers, storage nodes):
+  # - I/O APIC: Better interrupt handling for multi-core VMs
+  # - KVM Paravirtualization: Faster virtualization interface (reduce VM overhead)
+
+  # VirtualBox VM folder (controls where ALL VMs and disks are stored)
+  vm_folder: "D:/"  # Default: empty (uses VirtualBox default folder, typically C:\Users\<user>\VirtualBox VMs)
+  # Examples:
+  # - Windows: "D:/VirtualBox-VMs"
+  # - Windows: "E:/Virtual-Machines"
+  # - Linux/Mac: "/mnt/data/vbox-vms"
+  #
+  # What this affects:
+  # - OS disks (50GB per VM) - Vagrant-managed VMDK files
+  # - VM configuration files (.vbox files)
+  # - VM snapshots and saved states
+  # - EVERYTHING related to the VMs
+  #
+  # ⚠️  IMPORTANT:
+  # - This changes VirtualBox's GLOBAL default machine folder
+  # - Affects ALL VirtualBox VMs (not just this Vagrant project)
+  # - Will be restored to original value after vagrant up completes
+  # - Requires vagrant destroy -f before changing (cannot move existing VMs)
+
 # Uncomment to set environment variables for services such as crio and kubelet.
 # For example, configure the cluster to pull images via a proxy.
 # environment: |
@@ -16,14 +44,36 @@ network:
     - 1.1.1.1
   pod_cidr: 172.16.1.0/16
   service_cidr: 172.17.1.0/18
+
+# Optimal Memory usage: 512 1024 2048 4096 8192 16384 
 nodes:
   control:
     cpu: 2
     memory: 4096
+    disk: 50    # OS disk size in GB
   workers:
-    count: 2
-    cpu: 1
-    memory: 2048
+    count: 3    # Regular compute-only worker nodes
+    cpu: 2      # Regular workers don't need io-engine, 2 CPUs sufficient
+    memory: 4096
+    disk: 50    # OS disk size in GB
+
+    # HugePages configuration for worker nodes (uses 2MB page size)
+    # Controls ACTUAL HugePages allocation on worker nodes
+    # Requirements by storage engine:
+    # - 0 (disabled): For Longhorn v1, LocalPV (no HugePages needed)
+    # - 2: For Longhorn v2 (REQUIRED for SPDK)
+    # Note: If using Longhorn v2, increase memory to 6144 (2GB HugePages + 4GB for pods)
+    hugepages_gb: 0  # Default: 0 (disabled), set to 2 for Longhorn v2
+
+  # Dedicated storage nodes for OpenEBS Mayastor (only created when openebs.mayastor.enabled: true)
+  mayastor:
+    count: 3    # Minimum 3 required for 3-way replication (validated on startup)
+    cpu: 4      # io-engine requires 2 full CPUs, need 4 total for system pods (6 recommended for VMs)
+    memory: 4096 # 2GB for HugePages + 2GB for OS/pods (4GB minimum, always leave mininum 2GB for OS and calico)
+    disk: 50    # OS disk size in GB
+    storage_disk: 100 # Additional disk size in GB for Mayastor storage pools
+    taint: true # Taint nodes to dedicate them for storage only (storage=mayastor:NoSchedule)
+    hugepages_gb: 2  # HugePages REQUIRED for Mayastor (2GB minimum, uses 2MB pages)
 # Mount additional shared folders from the host into each virtual machine.
 # Note that the project directory is automatically mounted at /vagrant.
 # shared_folders:
@@ -31,9 +81,86 @@ nodes:
 #     vm_path: /vagrant/images
 software:
   box: bento/ubuntu-24.04
-  calico: 3.26.0
-  # To skip the dashboard installation, set its version to an empty value or comment it out:
-  dashboard: 2.7.0
-  kubernetes: 1.31.0-*
+  calico: 3.31.0
+  # Kubernetes Dashboard (Helm chart version). Set to empty string to skip installation
+  dashboard_helm: 7.14.0
+  kubernetes: 1.33.5-*
 
+  # Storage Providers Configuration
+  # You can enable multiple storage providers simultaneously for comparison
+  storage:
+    # Longhorn - Distributed block storage (simple, lightweight)
+    longhorn:
+      enabled: true
+      version: 1.10.0      # Longhorn version (1.7.0+)
+      set_default: true   # Set as default storage class (only one can be default)
+
+      # Storage Engine Selection (v1 vs v2)
+      # v1: iSCSI-based (stable, production-ready)
+      # v2: SPDK/NVMe-oF based (2-3x faster, BETA, kernel 5.19+, needs 2GB HugePages)
+      # See README for detailed comparison and requirements
+      engine: v1           # Options: "v1" or "v2"
+
+      # V2 Engine Configuration (only applies when engine: v2)
+      # ⚠️  REQUIREMENTS: Kernel 5.19+ (6.7+ recommended), HugePages 2GB per node
+      # HugePages: Set nodes.workers.hugepages_2mb to 1024 (= 2GB) for v2 engine
+      # SPDK Driver: "uio_pci_generic" for VMs/dev, "vfio_pci" for production (needs IOMMU)
+      v2_spdk_driver: uio_pci_generic  # Options: "uio_pci_generic" or "vfio_pci"
+
+    # OpenEBS - Cloud-native storage platform
+    # Provides both network-replicated and local storage options
+    openebs:
+      version: 4.3.3      # OpenEBS Helm chart version (used by all OpenEBS components)
+
+      # Network-replicated storage (high availability across nodes)
+      # Note: Jiva was removed in OpenEBS 4.x - use Mayastor or Longhorn for replicated storage
+      networkpv:
+        # Mayastor - High-performance NVMe-oF storage (requires dedicated nodes)
+        # Built in Rust for maximum performance and safety
+        # Requires: 3+ dedicated storage nodes with HugePages (2GB per node)
+        mayastor:
+          enabled: false
+          set_default: false   # Set as default storage class (only one can be default)
+          replicas: 3          # Number of replicas per volume (3-way replication recommended)
+          # Best for: Performance-critical production workloads, databases, high IOPS
+
+      # Local storage engines (node-specific, high performance)
+      # Three independent storage backends available:
+      #
+      # 1. hostpath - Simple local directory storage (enabled by default when localpv.enabled: true)
+      #    - No dependencies, easy to use
+      #    - Data stored in /var/openebs/local on each node
+      #    - Good for development/testing
+      #
+      # 2. lvm - LVM-based storage (lvm_enabled: true)
+      #    - Requires: lvm2 utils installed, dm-snapshot kernel module
+      #    - Performance: 2-5x faster than ZFS on writes
+      #    - Very stable and mature (kernel native)
+      #    - Requires additional config for bitrot protection
+      #
+      # 3. zfs - ZFS-based storage (zfs_enabled: true)
+      #    - Requires: ZFS kernel module and utils installed
+      #    - Built-in: checksumming (bitrot protection), compression, dedup, encryption
+      #    - Advanced features: snapshots, clones, thin provisioning
+      #    - Slower writes but better data integrity
+      #
+      # enabled: false - Master switch. When false, NO LocalPV backends are installed
+      # enabled: true - Enables LocalPV. Hostpath is ON by default, LVM/ZFS opt-in
+      localpv:
+        enabled: false                 # Master switch for all LocalPV engines
+
+        # Hostpath backend (simple directory storage)
+        hostpath_enabled: false        # Enable hostpath backend
+        hostpath_set_default: false    # Set as default storage class
+
+        # LVM backend (high performance)
+        lvm_enabled: false             # Enable LVM backend
+        lvm_set_default: false         # Set as default storage class
+
+        # ZFS backend (data integrity)
+        zfs_enabled: false             # Enable ZFS backend
+        zfs_set_default: false         # Set as default storage class
+
+    # Run storage performance tests after installation (generates PDF reports)
+    run_tests: true
   os: xUbuntu_24.04

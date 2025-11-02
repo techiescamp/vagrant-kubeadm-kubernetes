@@ -1,12 +1,13 @@
 #!/bin/bash
 #
 # Deploys the Kubernetes dashboard when enabled in settings.yaml
+# Uses Helm for v7.x installations
 
 set -euxo pipefail
 
 config_path="/vagrant/configs"
 
-DASHBOARD_VERSION=$(grep -E '^\s*dashboard:' /vagrant/settings.yaml | sed -E -e 's/[^:]+: *//' -e 's/\r$//')
+DASHBOARD_VERSION=$(grep -E '^\s*dashboard_helm:' /vagrant/settings.yaml | sed -E -e 's/[^:]+: *//' -e 's/\r$//')
 if [ -n "${DASHBOARD_VERSION}" ]; then
   while sudo -i -u vagrant kubectl get pods -A -l k8s-app=metrics-server | awk 'split($3, a, "/") && a[1] != a[2] { print $0; }' | grep -v "RESTARTS"; do
     echo 'Waiting for metrics server to be ready...'
@@ -14,19 +15,43 @@ if [ -n "${DASHBOARD_VERSION}" ]; then
   done
   echo 'Metrics server is ready. Installing dashboard...'
 
-  sudo -i -u vagrant kubectl create namespace kubernetes-dashboard
+  # Install Helm if not present
+  if ! command -v helm &> /dev/null; then
+    echo "Installing Helm..."
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  fi
 
-  echo "Creating the dashboard user..."
+  # Add Kubernetes Dashboard Helm repository
+  echo "Adding Kubernetes Dashboard Helm repository..."
+  sudo -i -u vagrant helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+  sudo -i -u vagrant helm repo update
 
+  # Install Kubernetes Dashboard using Helm
+  echo "Installing Kubernetes Dashboard v${DASHBOARD_VERSION} using Helm..."
+  sudo -i -u vagrant helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
+    --create-namespace \
+    --namespace kubernetes-dashboard \
+    --version ${DASHBOARD_VERSION} \
+    --set=service.externalPort=443 \
+    --set=replicaCount=1 \
+    --set=extraArgs={--enable-skip-login} \
+    --set=protocolHttp=true \
+    --set=service.type=ClusterIP
+
+  # Wait for dashboard pods to be ready
+  echo "Waiting for dashboard pods to be ready..."
+  sleep 10
+  sudo -i -u vagrant kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=kubernetes-dashboard -n kubernetes-dashboard --timeout=300s || true
+
+  # Create admin user service account
+  echo "Creating admin user..."
   cat <<EOF | sudo -i -u vagrant kubectl apply -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-user
   namespace: kubernetes-dashboard
-EOF
-
-  cat <<EOF | sudo -i -u vagrant kubectl apply -f -
+---
 apiVersion: v1
 kind: Secret
 type: kubernetes.io/service-account-token
@@ -35,9 +60,7 @@ metadata:
   namespace: kubernetes-dashboard
   annotations:
     kubernetes.io/service-account.name: admin-user
-EOF
-
-  cat <<EOF | sudo -i -u vagrant kubectl apply -f -
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -52,14 +75,31 @@ subjects:
   namespace: kubernetes-dashboard
 EOF
 
-  echo "Deploying the dashboard..."
-  sudo -i -u vagrant kubectl apply -f "https://raw.githubusercontent.com/kubernetes/dashboard/v${DASHBOARD_VERSION}/aio/deploy/recommended.yaml"
+  # Wait for secret to be created
+  sleep 5
 
-  sudo -i -u vagrant kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}" >> "${config_path}/token"
-  echo "The following token was also saved to: configs/token"
+  # Get and save the token
+  echo "Retrieving admin token..."
+  sudo -i -u vagrant kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}" > "${config_path}/token"
+
+  echo ""
+  echo "=========================================="
+  echo "Kubernetes Dashboard installed successfully!"
+  echo "=========================================="
+  echo ""
+  echo "The admin token has been saved to: configs/token"
+  echo ""
+  echo "Token:"
   cat "${config_path}/token"
-  echo "
-Use it to log in at:
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=kubernetes-dashboard
-"
+  echo ""
+  echo ""
+  echo "To access the dashboard:"
+  echo "1. Run: kubectl proxy"
+  echo "2. Open: http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard-kong-proxy:443/proxy/"
+  echo "3. Use the token above to log in"
+  echo ""
+  echo "Or use port-forward:"
+  echo "kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443"
+  echo "Then open: https://localhost:8443"
+  echo ""
 fi
