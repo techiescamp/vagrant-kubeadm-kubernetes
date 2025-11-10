@@ -16,9 +16,9 @@ If you are MAC Silicon user, Please use the following repo.
 As part of our commitment to helping the DevOps community save money on Kubernetes Certifications, we continuously update the latest voucher codes from the Linux Foundation
 
 > [!IMPORTANT]
-> 🚀  Kubernetes Certification aspirants can **save 30%** today using code **DCUBE30** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
+> 🚀  Kubernetes Certification aspirants can **save 40%** today using code **40KUBE25CT** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
 
-The following are the best bundles to **save 38% (up to $788)** with code **DCUBE30**
+The following are the best bundles to **save 48% (up to $788)** with code **40KUBE25CT**
 
 - CKA + CKAD ($370+ Savings): [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle ($370+ Savings) [kube.promo/bundle](https://kube.promo/bundle)
