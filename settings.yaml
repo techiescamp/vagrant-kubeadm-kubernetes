@@ -33,7 +33,7 @@ software:
   box: bento/ubuntu-24.04
   calico: 3.31.0
   # To skip the dashboard installation, set its version to an empty value or comment it out:
-  dashboard: 2.7.0
+  dashboard: 7.14.0
   kubernetes: 1.34.0-*
 
   os: xUbuntu_24.04
