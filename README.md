@@ -116,19 +116,16 @@ vagrant ssh -c "/vagrant/scripts/dashboard.sh" controlplane
 
 ## Kubernetes Dashboard Access
 
-To get the login token, copy it from _config/token_ or run the following command:
-```shell
-kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}"
-```
+To get the login token, copy it from _config/token
 
-Make the dashboard accessible:
+Port forward:
 ```shell
-kubectl proxy
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
 ```
 
 Open the site in your browser:
 ```shell
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+https://localhost:8443
 ```
 
 ## To shutdown the cluster,
