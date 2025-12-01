@@ -24,14 +24,8 @@ The following are the best bundles to **save 65%** with code **CW25BUNCT**
 - CKA + CKAD: [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKAD + CKS Exam bundle: [kube.promo/k8s-bundle](https://kube.promo/k8s-bundle)
 
-Use code **CW25K8BUNCT** to get 60% discount on Kubestronaut Bundle
-
 > [!NOTE]
 > For all the offers, check out the [Linux Foudnation Coupon](https://github.com/techiescamp/linux-foundation-coupon) repo.
-
->⌛ Act fast—this limited-time offer won’t be around much longer!
-
-> You have one year of validity to appear for the certification exam after registration
 ## Organized Kubernetes & CKA Learning
 
 If you Looking for an organized way to learn Kubernetes and prepare for the CKA exam with practice questions? 
