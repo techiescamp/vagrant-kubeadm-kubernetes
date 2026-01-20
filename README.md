@@ -11,14 +11,14 @@ If you are MAC Silicon user, Please use the following repo.
 
 - [Vagrant Kubeadm Setup on MAC Silicon](https://github.com/techiescamp/vagrant-kubeadm-mac-silicon)
 
-## Kubernetes Certification Voucher (UpTo 38% OFF) 🎉
+## Kubernetes Certification Voucher (UpTo 40% OFF) 🎉
 
 If you are learning Kubernetes and preparing for Kubernetes certifications, these voucher codes will help you save money on your certification registration.
 
 > [!IMPORTANT]
-> 🚀  Kubernetes Certification aspirants can **save 30%** today using code **DCUBE30** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
+> 🚀  Kubernetes Certification aspirants can **save 35%** today using code **SKILLSMIX26CT** at https://kube.promo/devops. It is a limited-time offer from the Linux Foundation.
 
-The following are the best bundles to **save 38% (up to $788)** with code **DCUBE30**
+The following are the best bundles to **save 40% (up to $788)** with code **SKILLSMIX26CT**
 
 - CKA + CKAD: [kube.promo/cka-ckad](https://kube.promo/cka-ckad)
 - CKA + CKS Bundle: [kube.promo/bundle](https://kube.promo/bundle)
