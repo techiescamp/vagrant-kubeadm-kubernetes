@@ -10,7 +10,7 @@ cluster_name: Kubernetes Cluster
 # All IPs/CIDRs should be private and allowed in /etc/vbox/networks.conf.
 network:
   # Worker IPs are simply incremented from the control IP.
-  control_ip: 10.0.0.10
+  control_ip: 192.168.56.101
   dns_servers:
     - 8.8.8.8
     - 1.1.1.1
@@ -32,7 +32,7 @@ nodes:
 software:
   box: bento/ubuntu-24.04
   calico: 3.26.0
-  # To skip the dashboard installation, set its version to an empty value or comment it out:
+  container_runtime: "containerd"  # Options: cri-o, containerd
   dashboard: 2.7.0
   kubernetes: 1.31.0-*
 
