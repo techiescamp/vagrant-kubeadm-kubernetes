@@ -1,22 +1,49 @@
 #!/bin/bash
 #
-# Deploys the Kubernetes dashboard when enabled in settings.yaml
+# Deploys the Kubernetes dashboard using Helm when enabled in settings.yaml
 
 set -euxo pipefail
 
 config_path="/vagrant/configs"
 
 DASHBOARD_VERSION=$(grep -E '^\s*dashboard:' /vagrant/settings.yaml | sed -E -e 's/[^:]+: *//' -e 's/\r$//')
+
 if [ -n "${DASHBOARD_VERSION}" ]; then
-  while sudo -i -u vagrant kubectl get pods -A -l k8s-app=metrics-server | awk 'split($3, a, "/") && a[1] != a[2] { print $0; }' | grep -v "RESTARTS"; do
+  # Wait for metrics server to be ready
+  while sudo -i -u vagrant kubectl get pods -A -l k8s-app=metrics-server | \
+    awk 'split($3, a, "/") && a[1] != a[2] { print $0; }' | grep -v "RESTARTS"; do
     echo 'Waiting for metrics server to be ready...'
     sleep 5
   done
+
   echo 'Metrics server is ready. Installing dashboard...'
 
-  sudo -i -u vagrant kubectl create namespace kubernetes-dashboard
+  # Install Helm
+  echo "Installing Helm..."
+  curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-  echo "Creating the dashboard user..."
+  # Add the Kubernetes Dashboard Helm repository
+  echo "Adding Kubernetes Dashboard Helm repository..."
+  sudo -i -u vagrant helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+  sudo -i -u vagrant helm repo update
+
+  # Install/upgrade the Kubernetes Dashboard
+  echo "Installing Kubernetes Dashboard version ${DASHBOARD_VERSION}..."
+  sudo -i -u vagrant helm upgrade --install kubernetes-dashboard \
+    kubernetes-dashboard/kubernetes-dashboard \
+    --create-namespace \
+    --namespace kubernetes-dashboard \
+    --version "${DASHBOARD_VERSION}"
+
+  # Wait for dashboard to be ready
+  echo "Waiting for dashboard pods to be ready..."
+  sudo -i -u vagrant kubectl wait --for=condition=ready pod \
+    -l app.kubernetes.io/instance=kubernetes-dashboard \
+    -n kubernetes-dashboard \
+    --timeout=300s
+
+  # Create admin user
+  echo "Creating the dashboard admin user..."
 
   cat <<EOF | sudo -i -u vagrant kubectl apply -f -
 apiVersion: v1
@@ -24,17 +51,6 @@ kind: ServiceAccount
 metadata:
   name: admin-user
   namespace: kubernetes-dashboard
-EOF
-
-  cat <<EOF | sudo -i -u vagrant kubectl apply -f -
-apiVersion: v1
-kind: Secret
-type: kubernetes.io/service-account-token
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
-  annotations:
-    kubernetes.io/service-account.name: admin-user
 EOF
 
   cat <<EOF | sudo -i -u vagrant kubectl apply -f -
@@ -52,14 +68,20 @@ subjects:
   namespace: kubernetes-dashboard
 EOF
 
-  echo "Deploying the dashboard..."
-  sudo -i -u vagrant kubectl apply -f "https://raw.githubusercontent.com/kubernetes/dashboard/v${DASHBOARD_VERSION}/aio/deploy/recommended.yaml"
+  sleep 5
 
-  sudo -i -u vagrant kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}" >> "${config_path}/token"
-  echo "The following token was also saved to: configs/token"
+  # Generate token (Dashboard 7.x compatible)
+  echo "Generating admin token..."
+  sudo -i -u vagrant kubectl -n kubernetes-dashboard create token admin-user --duration=87600h > "${config_path}/token"
+
+  # Get the control plane IP
+  CONTROL_IP=$(grep -E '^\s*control_ip:' /vagrant/settings.yaml | sed -E -e 's/[^:]+: *//' -e 's/\r$//')
+
+  echo "Kubernetes Dashboard installed successfully!"
+
+  echo "Access Token (saved to configs/token):"
   cat "${config_path}/token"
-  echo "
-Use it to log in at:
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=kubernetes-dashboard
-"
+
+  echo "Dashboard Access URL:"
+  echo "  https://${CONTROL_IP}:30443"
 fi
