@@ -11,7 +11,7 @@ If you are MAC Silicon user, Please use the following repo.
 
 - [Vagrant Kubeadm Setup on MAC Silicon](https://github.com/techiescamp/vagrant-kubeadm-mac-silicon)
 
-## Kubernetes Certification Voucher (UpTo 50% OFF) 🎉
+## Kubernetes Certification Voucher (UpTo 38% OFF) 🎉
 
 If you are learning Kubernetes and preparing for Kubernetes certifications, these voucher codes will help you save money on your certification registration.
 
