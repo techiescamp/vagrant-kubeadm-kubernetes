@@ -108,7 +108,7 @@ or you can copy the config file to .kube directory.
 cp config ~/.kube/
 ```
 
-## Install Kubernetes Dashboard
+## Install Kubernetes Dashboard (deprecated, unmaintained)
 
 The dashboard is automatically installed by default, but it can be skipped by commenting out the dashboard version in _settings.yaml_ before running `vagrant up`.
 

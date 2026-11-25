@@ -24,7 +24,7 @@ if [ -n "${DASHBOARD_VERSION}" ]; then
 
   # Add the Kubernetes Dashboard Helm repository
   echo "Adding Kubernetes Dashboard Helm repository..."
-  sudo -i -u vagrant helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+  sudo -i -u vagrant helm repo add kubernetes-dashboard https://kubernetes-retired.github.io/dashboard/
   sudo -i -u vagrant helm repo update
 
   # Install/upgrade the Kubernetes Dashboard
